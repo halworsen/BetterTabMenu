@@ -8,4 +8,5 @@ Better Tab Menu is a Payday 2 mod which aims to improve the game's tab menu by g
 #### Installation
 
 Better Tab Menu depends on [Payday 2 BLT](http://paydaymods.com/download/) to work!
+
 Once you've installed BLT, place the "BetterTabMenu" folder inside Payday 2's "mods" folder.
