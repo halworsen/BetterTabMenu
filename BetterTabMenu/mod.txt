@@ -1,0 +1,12 @@
+{
+	"name" : "Better Tab Menu",
+	"description" : "Improves the tab menu",
+	"author" : "Atebite",
+	"contact" : "n/a",
+	"persist_scripts" : [
+		{ "global" : "BTMThink", "script_path" : "base.lua" }
+	],
+	"hooks" : [
+		{ "hook_id" : "lib/managers/hud/hudstatsscreen", "script_path" : "base.lua" }
+	]
+}
