@@ -3,7 +3,7 @@ A better tab menu for Payday 2
 
 ----
 
-Better Tab Menu is a Payday 2 mod which aims to improve the game's tab menu by getting rid of all the unnecessarities, and add relevant, desirable information.
+Better Tab Menu is a Payday 2 mod which aims to improve the game's tab menu by getting rid of all the unnecessary information, adding relevant, desirable information instead.
 
 #### Installation
 
