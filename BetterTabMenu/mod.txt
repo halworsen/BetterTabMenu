@@ -2,7 +2,7 @@
 	"name" : "Better Tab Menu",
 	"description" : "Improves the tab menu",
 	"author" : "Atebite",
-	"contact" : "n/a",
+	"contact" : "http://steamcommunity.com/id/atebite/",
 	"persist_scripts" : [
 		{ "global" : "BTMThink", "script_path" : "base.lua" }
 	],
