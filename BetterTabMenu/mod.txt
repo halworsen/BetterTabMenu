@@ -1,6 +1,6 @@
 {
 	"name" : "Better Tab Menu",
-	"description" : "Improves the tab menu",
+	"description" : "Improves the tab menu by removing unnecessary information, adding desirable, relevant information instead",
 	"author" : "Atebite",
 	"contact" : "http://steamcommunity.com/id/atebite/",
 	"persist_scripts" : [
