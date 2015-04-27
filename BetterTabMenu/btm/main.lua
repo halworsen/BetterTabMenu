@@ -19,6 +19,9 @@ function MODULE:init()
 end
 
 function MODULE:update()
+	if not Utils:IsInGameState() then return end
+	if not managers.hud._hud_statsscreen or not managers.hud._hud_statsscreen._full_hud_panel then return end
+	
 	-- original elements have a tendency of returning to their original sizes
 	self:hide_existing_elements()
 end
