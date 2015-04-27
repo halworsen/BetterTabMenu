@@ -135,38 +135,52 @@ function MODULE:perform_modifications()
 
 	text_x, text_y, text_w, text_h = self.elements.difficulty_text:text_rect()
 
-	-- Difficulty skulls
-	self.elements.skulls = {}
-	local texture_skull, texture_skull_rect = tweak_data.hud_icons:get_icon_data("risk_swat")
-	local texture_dw_skull, texture_dw_skull_rect = tweak_data.hud_icons:get_icon_data("risk_pd")
-
-	local normal_skull_data = {
-		texture = texture_skull,
-		texture_rect = texture_skull_rect,
-		w = 24,
-		h = 24,
-		color = (self.difficulty == 0 and Color.grey or Color.risk),
-		alpha = 0.5
-	}
-	local dw_skull_data = {
-		texture = texture_dw_skull,
-		texture_rect = texture_dw_skull_rect,
-		w = 24,
-		h = 24,
-		color = (self.difficulty == 0 and Color.grey or Color.risk),
-		alpha = 0.5
-	}
-
-	for i = 1,4 do
-		self.elements.skulls[i] = self.elements.container:bitmap((i == 4 and dw_skull_data or normal_skull_data))	
-
-		self.elements.skulls[i]:set_name("difficulty_skull_"..i)
-		self.elements.skulls[i]:set_x(text_w + 15 + 20*i)
-		self.elements.skulls[i]:set_y(text_y + text_h / 2 - self.elements.skulls[i]:h()/2)
-
-		if i <= self.difficulty then
-			self.elements.skulls[i]:set_alpha(1)
+	-- Difficulty indication
+	if BTM_options.data.use_skulls then
+		-- Difficulty skulls
+		self.elements.skulls = {}
+		local texture_skull, texture_skull_rect = tweak_data.hud_icons:get_icon_data("risk_swat")
+		local texture_dw_skull, texture_dw_skull_rect = tweak_data.hud_icons:get_icon_data("risk_pd")
+	
+		local normal_skull_data = {
+			texture = texture_skull,
+			texture_rect = texture_skull_rect,
+			w = 24,
+			h = 24,
+			color = (self.difficulty == 0 and Color.grey or Color.risk),
+			alpha = 0.5
+		}
+		local dw_skull_data = {
+			texture = texture_dw_skull,
+			texture_rect = texture_dw_skull_rect,
+			w = 24,
+			h = 24,
+			color = (self.difficulty == 0 and Color.grey or Color.risk),
+			alpha = 0.5
+		}
+	
+		for i = 1,4 do
+			self.elements.skulls[i] = self.elements.container:bitmap((i == 4 and dw_skull_data or normal_skull_data))	
+	
+			self.elements.skulls[i]:set_name("difficulty_skull_"..i)
+			self.elements.skulls[i]:set_x(text_w + 15 + 20*i)
+			self.elements.skulls[i]:set_y(text_y + text_h / 2 - self.elements.skulls[i]:h()/2)
+	
+			if i <= self.difficulty then
+				self.elements.skulls[i]:set_alpha(1)
+			end
 		end
+	else
+		-- Difficulty text
+		self.elements.difficulty_text = self.elements.container:text({
+			name = "btm_difficulty_text",
+			text = self.difficulty_str,
+			font = tweak_data.hud_stats.objectives_font,
+			font_size = tweak_data.hud_stats.objectives_title_size,
+			color = (self.difficulty == 0 and Color.white or Color.risk),
+			x = x + text_w,
+			y = text_y
+		})
 	end
 
 	-- Payday
