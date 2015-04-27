@@ -2,5 +2,9 @@
 	"btm_options" : "Better Tab Menu",
 	"btm_options_desc" : "Configure the tab menu to fit your preferences",
 	"use_difficulty_skulls" : "Use difficulty skulls",
-	"use_difficulty_skulls_desc" : "Whether or not skulls should be used as a difficulty indicator"
+	"use_difficulty_skulls_desc" : "Whether or not skulls should be used as a difficulty indicator",
+	"display_killed_civs" : "Killed civilians counter",
+	"display_killed_civs_desc" : "Show the amount of killed civilians along with the total cleaner costs",
+	"display_profit" : "Display profit",
+	"display_profit_desc" : "Show the actual profit from the heist"
 }

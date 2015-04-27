@@ -2,7 +2,7 @@ MODULE.ready = false
 
 function MODULE:init()
 	if not self.ready then return end
-	
+
 	Hooks:PreHook(HUDStatsScreen, "_animate_show_stats_left_panel", "BTMShowNewTabMenu", function()
 		self:show()
 	end)
@@ -26,17 +26,17 @@ function MODULE:update()
 		self.resolution_callback_added = true
 		managers.viewport:add_resolution_changed_func(function() self:init() end)
 	end
-	
+
 	if not Utils:IsInGameState() then return end
 	if not managers.hud._hud_statsscreen or not managers.hud._hud_statsscreen._full_hud_panel then return end
-	
-	-- at this point (the conditionals above are a-ok) every dependency has loaded (or should have, at least)
+
+	-- at this point (the conditionals above are a-ok) every dependency has loaded
 	-- initializing the module when it's loaded just leads to errors everywhere
 	if not self.ready then
 		self.ready = true
 		self:init()
 	end
-	
+
 	-- original elements have a tendency of returning to their original sizes
 	self:hide_existing_elements()
 end
@@ -123,8 +123,8 @@ function MODULE:perform_modifications()
 	self.elements.ghost_icon:set_y((text_y + text_h/2) - ghost_h/2)
 
 	-- "DIFFICULTY: "
-	self.elements.difficulty_text = self.elements.container:text({
-		name = "btm_difficulty_text",
+	self.elements.difficulty_title = self.elements.container:text({
+		name = "btm_difficulty_title",
 		text = "DIFFICULTY: ",
 		font = tweak_data.hud_stats.objectives_font,
 		font_size = tweak_data.hud_stats.objectives_title_size,
@@ -133,7 +133,7 @@ function MODULE:perform_modifications()
 		y = text_y + text_h*2
 	})
 
-	text_x, text_y, text_w, text_h = self.elements.difficulty_text:text_rect()
+	text_x, text_y, text_w, text_h = self.elements.difficulty_title:text_rect()
 
 	-- Difficulty indication
 	if BTM_options.data.use_skulls then
@@ -141,7 +141,7 @@ function MODULE:perform_modifications()
 		self.elements.skulls = {}
 		local texture_skull, texture_skull_rect = tweak_data.hud_icons:get_icon_data("risk_swat")
 		local texture_dw_skull, texture_dw_skull_rect = tweak_data.hud_icons:get_icon_data("risk_pd")
-	
+
 		local normal_skull_data = {
 			texture = texture_skull,
 			texture_rect = texture_skull_rect,
@@ -158,14 +158,14 @@ function MODULE:perform_modifications()
 			color = (self.difficulty == 0 and Color.grey or Color.risk),
 			alpha = 0.5
 		}
-	
+
 		for i = 1,4 do
 			self.elements.skulls[i] = self.elements.container:bitmap((i == 4 and dw_skull_data or normal_skull_data))	
-	
+
 			self.elements.skulls[i]:set_name("difficulty_skull_"..i)
 			self.elements.skulls[i]:set_x(text_w + 15 + 20*i)
 			self.elements.skulls[i]:set_y(text_y + text_h / 2 - self.elements.skulls[i]:h()/2)
-	
+
 			if i <= self.difficulty then
 				self.elements.skulls[i]:set_alpha(1)
 			end
@@ -257,29 +257,31 @@ function MODULE:perform_modifications()
 		y = text_y
 	})
 
-	-- "PROFIT: "
-	self.elements.profit_text = self.elements.container:text({
-		name = "btm_profit_text",
-		text = "PROFIT: ",
-		font = tweak_data.hud_stats.objectives_font,
-		font_size = tweak_data.hud_stats.objectives_title_size,
-		color = Color.white,
-		x = x,
-		y = text_y + text_h
-	})
+	if BTM_options.data.display_profit then
+		-- "PROFIT: "
+		self.elements.profit_text = self.elements.container:text({
+			name = "btm_profit_text",
+			text = "PROFIT: ",
+			font = tweak_data.hud_stats.objectives_font,
+			font_size = tweak_data.hud_stats.objectives_title_size,
+			color = Color.white,
+			x = x,
+			y = text_y + text_h
+		})
 
-	text_x, text_y, text_w, text_h = self.elements.profit_text:text_rect()
+		text_x, text_y, text_w, text_h = self.elements.profit_text:text_rect()
 
-	-- Actual profit string
-	self.elements.profit_amount = self.elements.container:text({
-		name = "btm_profit_amount",
-		text = self.profit,
-		font = tweak_data.hud_stats.objectives_font,
-		font_size = tweak_data.hud_stats.objectives_title_size,
-		color = Color.friend,
-		x = x + text_w,
-		y = text_y
-	})
+		-- Actual profit string
+		self.elements.profit_amount = self.elements.container:text({
+			name = "btm_profit_amount",
+			text = self.profit,
+			font = tweak_data.hud_stats.objectives_font,
+			font_size = tweak_data.hud_stats.objectives_title_size,
+			color = Color.friend,
+			x = x + text_w,
+			y = text_y
+		})
+	end
 
 	--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -299,23 +301,20 @@ function MODULE:show()
 		self.elements.ghost_icon:set_color(Color.pro)
 	end
 
-	-- cleaner costs color
+	-- cleaner costs
 	if self.real_cleaner_costs > 0 then
 		self.elements.cleaner_costs_amount:set_color(Color.pro)
 	end
 
-	-- spending cash color
-	if self.real_spending_cash < 0 then
-		self.elements.spending_cash_amount:set_color(Color.pro)
-	elseif self.real_spending_cash >= 0 then
-		self.elements.spending_cash_amount:set_color(Color.friend)
-	end
-
-	-- profit color
-	if self.real_profit < 0 then
-		self.elements.profit_amount:set_color(Color.pro)
-	elseif self.real_profit >= 0 then
-		self.elements.profit_amount:set_color(Color.friend)
+	if BTM_options.data.display_profit then
+		-- profit color
+		if self.real_profit < 0 then
+			self.elements.profit_amount:set_color(Color.pro)
+		elseif self.real_profit == 0 then
+			self.elements.profit_amount:set_color(Color.white)
+		elseif self.real_profit > 0 then
+			self.elements.profit_amount:set_color(Color.friend)
+		end
 	end
 
 	-- update payday info
@@ -323,7 +322,9 @@ function MODULE:show()
 	self.elements.offshore_text:set_text("OFFSHORE ACCOUNT: "..self.offshore_cash)
 	self.elements.cleaner_costs_amount:set_text(self.cleaner_costs)
 	self.elements.spending_cash_amount:set_text(self.spending_cash)
-	self.elements.profit_amount:set_text(self.profit)
+	if BTM_options.data.display_profit then
+		self.elements.profit_amount:set_text(self.profit)
+	end
 
 	for k,v in pairs(self.elements) do
 		if type(v) == "table" then
@@ -368,7 +369,7 @@ function MODULE:update_vars()
 	self.offshore_cash = managers.experience:cash_string(total_payout * 0.8)
 
 	self.real_cleaner_costs = cleaner_costs
-	self.cleaner_costs = utf8.to_upper(managers.experience:cash_string(cleaner_costs).." ("..managers.statistics:session_total_civilian_kills().." killed)")
+	self.cleaner_costs = utf8.to_upper(managers.experience:cash_string(cleaner_costs)..(BTM_options.data.display_killed_civs and " ("..managers.statistics:session_total_civilian_kills().." killed)" or ""))
 
 	self.real_spending_cash = spending_cash
 	self.spending_cash = managers.experience:cash_string(spending_cash)
@@ -387,16 +388,15 @@ function MODULE:update_vars()
 
 	-- difficulty
 	local difficulty_map = {
-		[0] = "normal",
-		[1] = "hard",
-		[2] = "very hard",
-		[3] = "overkill",
-		[4] = "death wish"
+		[0] = "NORMAL",
+		[1] = "HARD",
+		[2] = "VERY HARD",
+		[3] = "OVERKILL",
+		[4] = "DEATH WISH"
 	}
 
 	self.difficulty = managers.job:current_difficulty_stars()
-	self.difficulty_str = difficulty_map[job_difficulty]
-	self.difficulty_color = job_difficulty ~= 0 and Color.risk or Color.white
+	self.difficulty_str = difficulty_map[self.difficulty]
 
 	--[[
 	self.hit_accuracy = managers.statistics:session_hit_accuracy().."%" or "0"

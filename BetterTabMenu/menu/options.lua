@@ -29,6 +29,16 @@ Hooks:Add("MenuManagerInitialize", "MenuManagerInitialize_BTMOptions", function(
 		BTM_options:save()
 	end
 
+	function MenuCallbackHandler:callback_display_profit_toggle(item)
+		BTM_options.data.display_profit = item:value() == "on" and true or false
+		BTM_options:save()
+	end
+
+	function MenuCallbackHandler:callback_display_killed_civs_toggle(item)
+		BTM_options.data.display_killed_civs = item:value() == "on" and true or false
+		BTM_options:save()
+	end
+
 	BTM_options:load()
 	MenuHelper:LoadFromJsonFile(BTM_options.path.."menu/btm_options.txt", BTM_options, BTM_options.data)
 end)

@@ -12,6 +12,24 @@
 			"callback" : "callback_difficulty_skulls_toggle",
 			"value" : "use_skulls",
 			"default_value" : true,
+		},
+		{
+			"type" : "toggle",
+			"id" : "display_killed_civs",
+			"title" : "display_killed_civs",
+			"description" : "display_killed_civs_desc",
+			"callback" : "callback_display_killed_civs_toggle",
+			"value" : "display_killed_civs",
+			"default_value" : true,
+		},
+		{
+			"type" : "toggle",
+			"id" : "display_profit",
+			"title" : "display_profit",
+			"description" : "display_profit_desc",
+			"callback" : "callback_display_profit_toggle",
+			"value" : "display_profit",
+			"default_value" : true,
 		}
 	]
 }
