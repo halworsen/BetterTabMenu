@@ -1,4 +1,8 @@
+MODULE.ready = false
+
 function MODULE:init()
+	if not self.ready then return end
+	
 	Hooks:PreHook(HUDStatsScreen, "_animate_show_stats_left_panel", "BTMShowNewTabMenu", function()
 		self:show()
 	end)
@@ -24,6 +28,13 @@ function MODULE:update()
 	
 	if not Utils:IsInGameState() then return end
 	if not managers.hud._hud_statsscreen or not managers.hud._hud_statsscreen._full_hud_panel then return end
+	
+	-- at this point (the conditionals above are a-ok) every dependency has loaded (or should have, at least)
+	-- initializing the module when it's loaded just leads to errors everywhere
+	if not self.ready then
+		self.ready = true
+		self:init()
+	end
 	
 	-- original elements have a tendency of returning to their original sizes
 	self:hide_existing_elements()
