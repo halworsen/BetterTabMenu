@@ -73,7 +73,7 @@ function MODULE:perform_modifications()
 	self.elements.pro_title = self.elements.container:text({
 		name = "btm_pro_title",
 		-- by setting text based on whether you're playing a pro job or not (as opposed to setting visibility) MODULE:show() doesn't need special exceptions
-		text = (self.pro_job and "BLO JOB" or ""),
+		text = (self.pro_job and "PRO JOB" or ""),
 		font = tweak_data.hud_stats.objectives_font,
 		font_size = tweak_data.hud_stats.objectives_title_size,
 		color = Color.pro,
