@@ -1,0 +1,6 @@
+{
+	"btm_options" : "Better Tab Menu",
+	"btm_options_desc" : "Configure the tab menu to fit your preferences",
+	"use_difficulty_skulls" : "Use difficulty skulls",
+	"use_difficulty_skulls_desc" : "Whether or not skulls should be used as a difficulty indicator"
+}

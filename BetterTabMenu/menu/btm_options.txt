@@ -1,0 +1,17 @@
+{
+	"menu_id" : "btm_options",
+	"parent_menu_id" : "lua_mod_options_menu",
+	"title" : "btm_options",
+	"description" : "btm_options_desc",
+	"items" : [
+		{
+			"type" : "toggle",
+			"id" : "use_difficulty_skulls",
+			"title" : "use_difficulty_skulls",
+			"description" : "use_difficulty_skulls_desc",
+			"callback" : "callback_difficulty_skulls_toggle",
+			"value" : "use_skulls",
+			"default_value" : true,
+		}
+	]
+}
