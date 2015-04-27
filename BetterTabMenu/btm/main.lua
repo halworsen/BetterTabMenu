@@ -17,13 +17,13 @@ function MODULE:init()
 end
 
 function MODULE:update()
-	if not Utils:IsInGameState() then return end
-	if not managers.hud._hud_statsscreen or not managers.hud._hud_statsscreen._full_hud_panel then return end
-	
 	if not self.resolution_callback_added and managers.viewport then
 		self.resolution_callback_added = true
 		managers.viewport:add_resolution_changed_func(function() self:init() end)
 	end
+	
+	if not Utils:IsInGameState() then return end
+	if not managers.hud._hud_statsscreen or not managers.hud._hud_statsscreen._full_hud_panel then return end
 	
 	-- original elements have a tendency of returning to their original sizes
 	self:hide_existing_elements()
