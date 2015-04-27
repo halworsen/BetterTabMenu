@@ -15,6 +15,7 @@ function MODULE:init()
 	Color.friend = tweak_data.screen_colors.friend_color
 	Color.risk = tweak_data.screen_colors.risk
 	Color.s_blue = tweak_data.screen_color_blue
+	Color.grey = tweak_data.screen_color_grey
 
 	self:update_vars()
 	self:perform_modifications()
@@ -144,7 +145,7 @@ function MODULE:perform_modifications()
 		texture_rect = texture_skull_rect,
 		w = 24,
 		h = 24,
-		color = Color.risk,
+		color = (self.difficulty == 0 and Color.grey or Color.risk),
 		alpha = 0.5
 	}
 	local dw_skull_data = {
@@ -152,7 +153,7 @@ function MODULE:perform_modifications()
 		texture_rect = texture_dw_skull_rect,
 		w = 24,
 		h = 24,
-		color = Color.risk,
+		color = (self.difficulty == 0 and Color.grey or Color.risk),
 		alpha = 0.5
 	}
 
